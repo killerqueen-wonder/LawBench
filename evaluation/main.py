@@ -64,7 +64,16 @@ def main(argv):
         for dataset_file in dataset_files:
             datafile_name = dataset_file.split(".")[0]
             input_file = os.path.join(system_folder_dir, dataset_file)
-            data_dict = read_json(input_file)
+
+            # data_dict = read_json(input_file)
+            try:
+                data_dict = read_json(input_file)
+            except Exception as e:
+                print(f"[ERROR] Failed to read {input_file}: {e}")
+                print(f"[WARNING] Skipping {datafile_name}")
+                continue  # 跳过这个文件
+
+
             if datafile_name not in funct_dict:
                 print(f"*** Warning: {datafile_name} is not in funct_dict ***")
                 continue
